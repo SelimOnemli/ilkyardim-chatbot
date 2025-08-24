@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İlk Yardım Chatbot</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <img src="https://altinbas.edu.tr/asset/awd/files/4/kurumsal-kimlik/logo/yatay-3-tr-png.png" 
+                     alt="Altınbaş Üniversitesi" class="logo">
+                <div class="header-text">
+                    <h1>YAPAY ZEKA DERSİ ÖDEVİ</h1>
+                    <h2>İLK YARDIM ASİSTANI</h2>
+                </div>
+            </div>
+            <p class="sorumluluk-reddi">Sorumluluk Reddi: Bu chatbot tıbbi bir profesyonelin yerini tutmaz. Acil durumlarda lütfen 112'yi arayın.</p>
+        </header>
+
+        <div class="chat-container">
+            {% if chat_history %}
+                {% for mesaj in chat_history %}
+                    <div class="{{ 'soru' if mesaj.role == 'user' else 'cevap' }}">
+                        <strong>{{ 'Siz' if mesaj.role == 'user' else 'Asistan' }}:</strong> 
+                        {{ mesaj.content|replace('\n', '<br>')|safe }}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="hosgeldiniz">
+                    <p>Merhaba! İlk yardım konusunda size yardımcı olmak için buradayım. Bir soru sorarak başlayabilirsiniz!</p>
+                    <p><em>Örnek sorular:</em></p>
+                    <ul>
+                        <li>Birisi bayıldı, ne yapmalıyım?</li>
+                        <li>Kanama nasıl durdurulur?</li>
+                        <li>CPR nasıl yapılır?</li>
+                        <li>Yanıklarda ilk yardım nedir?</li>
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+
+        <form method="POST" class="soru-formu" id="soru-formu">
+            <textarea name="soru" placeholder="İlk yardım sorunuzu yazın..." required rows="4"></textarea>
+            <div class="form-buttons">
+                <select name="model" style="padding: 10px; border-radius: 5px; border: 1px solid #ddd;">
+                    <option value="gemini">Gemini</option>
+                    <option value="deepseek">DeepSeek</option>
+                    <option value="chatgpt">ChatGPT</option>
+                </select>
+                <button type="submit">Gönder</button>
+                <a href="{{ url_for('new_chat') }}" class="new-chat-btn">Yeni Asistan</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('soru-formu');
+        const textarea = document.querySelector('textarea[name="soru"]');
+        
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            try {
+                const response = await fetch('/', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    window.location.reload();
+                }
+            } catch (error) {
+                alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+            }
+        });
+
+        textarea.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                form.dispatchEvent(new Event('submit'));
+            }
+        });
+    </script>
+</body>
+</html>
