@@ -1,0 +1,95 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo {
+    max-width: 150px; /* Logo boyutunu küçülttük */
+    height: auto;
+}
+
+.header-text h1, .header-text h2 {
+    margin: 0;
+}
+
+.sorumluluk-reddi {
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 10px;
+}
+
+.chat-container {
+    border: 1px solid #ddd;
+    padding: 15px;
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.soru, .cevap {
+    margin: 10px 0;
+}
+
+.soru strong {
+    color: #007bff;
+}
+
+.cevap strong {
+    color: #28a745;
+}
+
+.hosgeldiniz {
+    text-align: center;
+    color: #555;
+}
+
+.soru-formu textarea {
+    width: 100%; /* Textarea genişliğini artırdık */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    resize: vertical;
+    min-height: 100px;
+    box-sizing: border-box;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.soru-formu button[type="submit"] {
+    background: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    flex: 1;
+}
+
+.soru-formu button[type="submit"]:hover {
+    background: #0056b3;
+}
+
+.new-chat-btn {
+    background: #6c757d;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    flex: 1;
+}
+
+.new-chat-btn:hover {
+    background: #5a6268;
+}
